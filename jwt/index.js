@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 import express from "express";
 
@@ -11,10 +10,20 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-const generateToken = function (user_id) {
-    const token= jwt.sign("this demo text", "secrete key");
+const generateToken = function () {
+  const token = jwt.sign("this demo text", "secrete key");
 
-    console.log(token)
-  };
+  console.log(token);
+};
 
-generateToken()
+generateToken();
+
+const generateTokenWithTime = function () {
+  const token = jwt.sign({name:"this demo text"}, "secrete key", {
+    expiresIn: 60 * 60,
+  });
+
+  console.log(token);
+};
+
+generateTokenWithTime();
