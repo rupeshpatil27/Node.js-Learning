@@ -15,7 +15,15 @@ app.listen(port, () => {
 
 var fs = require('fs');
 
-fs.open('demoEmpty.txt', 'w', function (err, file) {
+// fs.open('demoEmpty.txt', 'w', function (err, file) {
+//   if (err) throw err;
+//   console.log('Saved!');
+// }); 
+
+
+// create empty file and add text
+
+fs.writeFile('demoEmpty.txt', 'Hello content!', function (err) {
   if (err) throw err;
   console.log('Saved!');
 }); 
