@@ -23,7 +23,14 @@ var fs = require('fs');
 
 // create empty file and add text
 
-fs.writeFile('demoEmpty.txt', 'Hello content!', function (err) {
+// fs.writeFile('demoEmpty.txt', 'Hello content!', function (err) {
+//   if (err) throw err;
+//   console.log('Saved!');
+// }); 
+
+// update file
+
+fs.appendFile('demoEmpty.txt', ' update text.', function (err) {
   if (err) throw err;
-  console.log('Saved!');
+  console.log('Updated!');
 }); 
