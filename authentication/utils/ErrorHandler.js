@@ -20,5 +20,5 @@ class ErrorHandler extends Error {
   }
 }
 
-export { ErrorHandler, errorMiddleware };
+export { ErrorHandler};
 
