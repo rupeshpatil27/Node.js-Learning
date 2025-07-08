@@ -9,20 +9,17 @@ dotenv.config({
 const port = process.env.PORT || 3000;
 
 connectDB()
+  .then(() => {
+    app.on("error", (error) => {
+      console.log("Err: ", error);
+      throw error;
+    });
 
-// (async () => {
-//   try {
+    app.listen(port, () => {
+      console.log(`server is running on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log("MongoDB connection failed !!", err);
+  });
 
-//     app.on("error", (error) => {
-//       console.log("Err: ", error);
-//       throw error;
-//     });
-
-//     app.listen(port, () => {
-//       console.log(`server is running on http://localhost:${port}`);
-//     });
-//   } catch (error) {
-//     console.log("Error: ", error);
-//     throw error;
-//   }
-// })();
