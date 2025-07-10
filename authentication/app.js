@@ -23,7 +23,7 @@ import userRouter from "./routes/user.routes.js";
 
 app.use("/api/v1/user", userRouter);
 
-import errorMiddleware from "./middleware/errorMiddleware.js";
+import errorMiddleware from "./middleware/error.middleware.js";
 app.use(errorMiddleware);
 
 export { app };
