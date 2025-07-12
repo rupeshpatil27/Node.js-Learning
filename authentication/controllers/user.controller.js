@@ -3,6 +3,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ErrorHandler } from "../utils/ErrorHandler.js";
 
+import jwt from "jsonwebtoken";
+
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -138,10 +140,9 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"));
 });
 
-const refreshAccessToken = asyncHandler(async (req, res, next) => {
+const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
-
   if (!incomingRefreshToken) {
     throw new ErrorHandler(401, "unauthorized request");
   }
@@ -167,11 +168,10 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
       secure: true,
     };
 
-    const { accessToken, refreshToken:newRefreshToken } = await generateAccessAndRefreshTokens(
-      user._id
-    );
+    const { accessToken, refreshToken: newRefreshToken } =
+      await generateAccessAndRefreshTokens(user._id);
 
-    res
+    return res
       .status(200)
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", newRefreshToken, options)
@@ -190,4 +190,28 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { registerUser, loginUser, logoutUser ,refreshAccessToken};
+const forgetPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await User.findById(req.user?._id);
+
+  const isPasswordCorrect = user.isPasswordCorrect(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new ErrorHandler(400, "Invalid old password");
+  }
+
+  user.password = newPassword;
+
+  await user.save({ validateBeforeSave: false });
+
+  return res.status(200).json(new ApiResponse(200, {}, "Password changed!!"));
+});
+
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshAccessToken,
+  forgetPassword,
+};
