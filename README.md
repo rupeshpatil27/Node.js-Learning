@@ -14,4 +14,5 @@ This repository documents my journey of understanding core Node.js concepts thro
 - ✅ Nodemailer  
 - ✅ Middleware  
 - ✅ Authentication
+- ✅ multer
 
