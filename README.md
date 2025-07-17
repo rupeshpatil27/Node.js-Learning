@@ -15,4 +15,5 @@ This repository documents my journey of understanding core Node.js concepts thro
 - ✅ Middleware  
 - ✅ Authentication
 - ✅ multer
+- ✅ Web server
 
