@@ -4,7 +4,12 @@ const port = 3000;
 
 app.use(express.json());
 
-
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+export function mockObject(data) {
+  return {
+    name: "test data!",
+  };
+}
